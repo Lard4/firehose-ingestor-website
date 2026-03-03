@@ -1,0 +1,218 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0e0e0e;
+  --surface: #161616;
+  --border: #252525;
+  --text: #e8e4dc;
+  --muted: #555;
+  --accent: #c8b89a;
+  --parent-bg: #131313;
+}
+
+/* ── Layout ── */
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-weight: 300;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+#stage {
+  width: 100%;
+  max-width: 560px;
+  position: relative;
+}
+
+/* ── Status indicator ── */
+
+#status {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3a3a3a;
+  transition: background 0.4s;
+}
+
+#dot.live   { background: #4caf82; animation: pulse 2s ease-in-out infinite; }
+#dot.paused { background: var(--accent); }
+#dot.error  { background: #c0392b; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ── Controls ── */
+
+#controls {
+  position: fixed;
+  top: 1.25rem;
+  left: 1.5rem;
+  display: flex;
+  gap: 0.6rem;
+}
+
+#controls button {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.55rem 1.2rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+#controls button:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+#controls button:disabled {
+  opacity: 0.2;
+  cursor: default;
+}
+
+/* ── Post stack ── */
+
+.post-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  animation: appear 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Post ── */
+
+.post {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1.4rem 1.6rem;
+  position: relative;
+}
+
+.post.parent {
+  background: var(--parent-bg);
+  border-bottom: none;
+  opacity: 0.72;
+}
+
+.post.parent::after {
+  content: '';
+  position: absolute;
+  left: 2.2rem;
+  bottom: -14px;
+  width: 1px;
+  height: 14px;
+  background: var(--border);
+}
+
+.post.main {
+  border-top: 2px solid var(--accent);
+}
+
+.handle {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+  text-transform: lowercase;
+}
+
+.content {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 0.9rem;
+}
+
+.post.parent .content {
+  font-size: 1rem;
+}
+
+/* ── Images ── */
+
+.images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.images img {
+  max-width: 220px;
+  max-height: 160px;
+  object-fit: cover;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  display: block;
+  transition: filter 0.2s;
+}
+
+.images img.blurred {
+  filter: blur(12px);
+}
+
+/* ── Stats ── */
+
+.stats {
+  display: flex;
+  gap: 1.4rem;
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+.stat span {
+  color: var(--text);
+  opacity: 0.55;
+  margin-right: 0.25rem;
+}
+
+/* ── Empty state ── */
+
+#empty {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+#empty p:first-child {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.5rem;
+  color: #2a2a2a;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-bottom: 0.5rem;
+}

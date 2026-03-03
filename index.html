@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>stream</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div id="status">
+    <div id="dot"></div>
+    <span id="status-text">connecting</span>
+  </div>
+
+  <div id="controls">
+    <button id="btn-pause">pause</button>
+    <button id="btn-resume" disabled>resume</button>
+    <button id="btn-blur">blur images</button>
+  </div>
+
+  <div id="stage">
+    <div id="empty">
+      <p>waiting for posts</p>
+      <p>connecting to stream&hellip;</p>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
