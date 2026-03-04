@@ -36,7 +36,7 @@ function isWellFormedPost(data: unknown): data is Post {
 }
 
 function connectUpstream() {
-  const upstream = new EventSource("http://localhost:5005/feed");
+  const upstream = new EventSource("https://verda-nonobsessional-jaxon.ngrok-free.dev/feed");
   upstream.onmessage = (event) => {
     const raw: unknown = JSON.parse(event.data.toString());
     if (!isWellFormedPost(raw)) {
