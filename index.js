@@ -84,7 +84,6 @@ function renderPost(post) {
   const stack = document.createElement('div');
   stack.className = 'post-stack';
 
-  // collect ancestry chain oldest-first
   const chain = [];
   let cursor = post.parent;
   while (cursor) {
@@ -99,30 +98,42 @@ function renderPost(post) {
   stage.appendChild(stack);
 }
 
-// ── WebSocket ─────────────────────────────────────────────
+// ── SSE ───────────────────────────────────────────────────
 
 function connect() {
-  const ws = new WebSocket('ws://localhost:3001/stream');
+  fetch('https://verda-nonobsessional-jaxon.ngrok-free.dev/feed', {
+    headers: { 'ngrok-skip-browser-warning': 'true' }
+  }).then(res => {
+    setStatus('live', 'live');
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
 
-  ws.addEventListener('open', () => {
-    if (!paused) setStatus('live', 'live');
-  });
-
-  ws.addEventListener('message', (e) => {
-    if (paused) return;
-    try {
-      const post = JSON.parse(e.data);
-      renderPost(post);
-    } catch {}
-  });
-
-  ws.addEventListener('close', () => {
+    function read() {
+      reader.read().then(({ done, value }) => {
+        if (done) {
+          setStatus('error', 'disconnected');
+          setTimeout(connect, 3000);
+          return;
+        }
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop(); // keep incomplete line
+        for (const line of lines) {
+          if (!line.startsWith('data:')) continue;
+          if (paused) continue;
+          try {
+            const post = JSON.parse(line.slice(5).trim());
+            renderPost(post);
+          } catch {}
+        }
+        read();
+      });
+    }
+    read();
+  }).catch(() => {
     setStatus('error', 'disconnected');
     setTimeout(connect, 3000);
-  });
-
-  ws.addEventListener('error', () => {
-    setStatus('error', 'error');
   });
 }
 
