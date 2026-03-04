@@ -198,7 +198,25 @@ body {
   margin-right: 0.25rem;
 }
 
-/* ── Empty state ── */
+#github {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.2s;
+}
+
+#github:hover {
+  color: var(--accent);
+}
 
 #empty {
   text-align: center;
