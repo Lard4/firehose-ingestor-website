@@ -102,8 +102,11 @@ function renderPost(post) {
 // ── SSE ───────────────────────────────────────────────────
 
 function connect() {
-  fetch('https://verda-nonobsessional-jaxon.ngrok-free.dev/feed', {
-    headers: { 'ngrok-skip-browser-warning': 'true' }
+  fetch('https://verda-nonobsessional-jaxon.ngrok-free.dev/feed?ngrok-skip-browser-warning=true', {
+    headers: { 
+        'ngrok-skip-browser-warning': 'true',
+        'User-Agent': 'MyApp/0.0.1' // to bypass the intersterial https://ngrok.com/docs/pricing-limits/free-plan-limits#fetch
+    }
   }).then(res => {
     setStatus('live', 'live');
     const reader = res.body.getReader();
