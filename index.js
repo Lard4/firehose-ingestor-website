@@ -10,7 +10,7 @@ const btnBlur    = document.getElementById('btn-blur');
 // ── State ─────────────────────────────────────────────────
 
 let paused     = false;
-let blurImages = false;
+let blurImages = true; // start blurred...
 
 // ── Controls ──────────────────────────────────────────────
 
