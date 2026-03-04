@@ -6,6 +6,7 @@ const statusText = document.getElementById('status-text');
 const btnPause   = document.getElementById('btn-pause');
 const btnResume  = document.getElementById('btn-resume');
 const btnBlur    = document.getElementById('btn-blur');
+btnBlur.textContent = 'unblur images';
 
 // ── State ─────────────────────────────────────────────────
 
